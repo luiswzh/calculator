@@ -67,7 +67,7 @@ function calculate(){
     secondOperand=+topDisplay.textContent;
     let result = operatorFunctions[operator](firstOperand,secondOperand);
     if (result){
-        topDisplay.textContent=result;
+        topDisplay.textContent=Math.round(result*100)/100;
     } else {
         topDisplay.textContent='can\'t divide by zero';
     }
