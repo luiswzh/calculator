@@ -69,11 +69,13 @@ button {
 }
 
 .display .top {
-    font-size: xx-large;
+    font-size: 30px;
+    height: 35px;
 }
 
 .display .bottom {
-    font-size: large;
+    font-size: 20px;
+    height: 25px;
     font-weight: bold;
 }
 
