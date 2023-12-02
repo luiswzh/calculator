@@ -30,7 +30,7 @@ const operatorFunctions = {
     
     divide: function(firstNumber, secondNumber){
         if(+secondNumber == 0){
-            return "CANT DIVIDE BY 0"
+            return false;
         }
         return +firstNumber / +secondNumber;
     },
@@ -65,7 +65,14 @@ function onOperatorClick(event){
 
 function calculate(){
     secondOperand=+topDisplay.textContent;
-    topDisplay.textContent=Math.round(operatorFunctions[operator](firstOperand,secondOperand)*100)/100;
+    let result = operatorFunctions[operator](firstOperand,secondOperand);
+    if (result){
+        topDisplay.textContent=result;
+    } else {
+        topDisplay.textContent='can\'t divide by zero';
+    }
+    
+
     operator='';
 }
 
