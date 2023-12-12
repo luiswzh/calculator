@@ -42,7 +42,7 @@ const operatorFunctions = {
 
 function addToTopDisplay(text){
     //Prevents multiple dots
-    if(topDisplay.textContent.includes('.') && text.currentTarget.textContent=='.'){
+    if(topDisplay.textContent.includes('.') && text=='.'){
         return;
     }
     //Prevents displaying more text than possible
@@ -50,15 +50,15 @@ function addToTopDisplay(text){
         alert('Display is full!');
         return;
     }
-    topDisplay.textContent += text.currentTarget.textContent;
+    topDisplay.textContent += text;
 }
 
-function onOperatorClick(event){
+function onOperatorClick(inputOperator){
     if(topDisplay.textContent != '' && bottomDisplay.textContent != ''){
         calculate();
     }  
     firstOperand=+topDisplay.textContent;
-    operator=event.currentTarget.id;
+    operator=inputOperator;
     bottomDisplay.textContent=topDisplay.textContent + ' ' + operatorDictionary[operator];
     topDisplay.textContent = '';
 }
@@ -77,12 +77,16 @@ function calculate(){
 }
 
 leftButtons.forEach((item)=>{
-    item.addEventListener('click',addToTopDisplay);
+    item.addEventListener('click',(event)=>{
+        addToTopDisplay(event.currentTarget.textContent);
+    });
 });
 
 
 operandButtons.forEach((item)=>{
-    item.addEventListener('click', onOperatorClick);
+    item.addEventListener('click', (event)=>{
+        onOperatorClick(event.currentTarget.id);
+    });
 });
 
 calculateButton.addEventListener('click',()=>{
@@ -100,4 +104,22 @@ acButton.addEventListener('click', ()=>{
     firstOperand=0;
     secondOperand=0;
     operator='';
+})
+
+document.addEventListener('keydown',(event)=>{
+    let keyPressed=event.key;
+    if(!isNaN(keyPressed)){
+        addToTopDisplay(keyPressed);
+    }
+    if(keyPressed=='+') {onOperatorClick('add')};
+    if(keyPressed=='-') {onOperatorClick('substract')};
+    if(keyPressed=='/') {onOperatorClick('divide')};
+    if(keyPressed=='*' || keyPressed=='x') {onOperatorClick('multiply')};
+    if(keyPressed=='Enter'){calculate();bottomDisplay.textContent=''}
+    if(keyPressed=='Delete'){   topDisplay.textContent='';
+                                bottomDisplay.textContent='';
+                                firstOperand=0;
+                                secondOperand=0;
+                                operator=''};
+    if(keyPressed=='Backspace'){topDisplay.textContent=topDisplay.textContent.slice(0, -1);};
 })
